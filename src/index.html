@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zona de Juegos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #07090f;
+            --surface: rgba(255,255,255,0.04);
+            --surface-hover: rgba(255,255,255,0.07);
+            --border: rgba(255,255,255,0.07);
+            --text: #e8edf5;
+            --muted: #6b7280;
+            --accent-red: #e63946;
+            --accent-cyan: #4cc9f0;
+            --accent-gold: #ffd60a;
+            --accent-green: #06d6a0;
+            --accent-purple: #a855f7;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100svh;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* NOISE TEXTURE */
+        body::before {
+            content: '';
+            position: fixed; inset: 0; z-index: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        /* BG GLOWS */
+        .bg-glow {
+            position: fixed; border-radius: 50%; filter: blur(120px);
+            pointer-events: none; z-index: 0;
+        }
+        .bg-glow-1 { width: 600px; height: 600px; background: rgba(230,57,70,0.06); top: -200px; left: -100px; }
+        .bg-glow-2 { width: 500px; height: 500px; background: rgba(76,201,240,0.05); bottom: -100px; right: -100px; }
+        .bg-glow-3 { width: 300px; height: 300px; background: rgba(168,85,247,0.04); top: 50%; left: 50%; transform: translate(-50%,-50%); }
+
+        /* HEADER */
+        header {
+            position: relative; z-index: 10;
+            padding: 48px 24px 0;
+            text-align: center;
+        }
+
+        .logo-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            padding: 6px 16px;
+            font-size: 11px; font-weight: 500; letter-spacing: 2px;
+            text-transform: uppercase; color: var(--muted);
+            margin-bottom: 24px;
+            animation: fadeDown 0.6s ease both;
+        }
+        .logo-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-green); animation: pulse 2s infinite; }
+
+        @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+        @keyframes fadeDown { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+        .hero-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(56px, 12vw, 110px);
+            letter-spacing: 4px;
+            line-height: 0.9;
+            margin-bottom: 16px;
+            animation: fadeDown 0.6s 0.1s ease both;
+        }
+        .hero-title .line1 { display: block; color: var(--text); }
+        .hero-title .line2 {
+            display: block;
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-cyan));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-sub {
+            font-size: 15px; color: var(--muted); max-width: 420px; margin: 0 auto 48px;
+            line-height: 1.7;
+            animation: fadeDown 0.6s 0.2s ease both;
+        }
+
+        /* GAMES GRID */
+        .games-section {
+            position: relative; z-index: 5;
+            max-width: 1100px; margin: 0 auto;
+            padding: 0 20px 80px;
+        }
+
+        .section-label {
+            font-size: 11px; font-weight: 700; letter-spacing: 3px;
+            text-transform: uppercase; color: var(--muted);
+            margin-bottom: 24px;
+            display: flex; align-items: center; gap: 12px;
+        }
+        .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
+        }
+
+        .game-card {
+            position: relative;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 28px;
+            text-decoration: none;
+            color: var(--text);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            overflow: hidden;
+            animation: fadeUp 0.5s ease both;
+            cursor: pointer;
+            display: block;
+        }
+
+        .game-card:nth-child(1) { animation-delay: 0.3s; }
+        .game-card:nth-child(2) { animation-delay: 0.4s; }
+        .game-card:nth-child(3) { animation-delay: 0.5s; }
+        .game-card:nth-child(4) { animation-delay: 0.6s; }
+        .game-card:nth-child(5) { animation-delay: 0.7s; }
+
+        .game-card::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), var(--card-glow, rgba(255,255,255,0.05)), transparent 70%);
+            opacity: 0; transition: opacity 0.3s;
+        }
+        .game-card:hover::before { opacity: 1; }
+
+        .game-card:hover {
+            transform: translateY(-6px) scale(1.01);
+            border-color: var(--card-accent, rgba(255,255,255,0.15));
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px var(--card-accent, transparent);
+        }
+
+        .card-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 20px; }
+
+        .card-icon {
+            width: 52px; height: 52px;
+            border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 26px;
+            background: var(--card-icon-bg, rgba(255,255,255,0.06));
+            border: 1px solid var(--card-accent, var(--border));
+        }
+
+        .card-badges { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+
+        .badge {
+            font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+            padding: 3px 10px; border-radius: 100px;
+        }
+        .badge-available { background: rgba(6,214,160,0.15); color: var(--accent-green); border: 1px solid rgba(6,214,160,0.25); }
+        .badge-soon { background: rgba(107,114,128,0.2); color: var(--muted); border: 1px solid var(--border); }
+        .badge-hot { background: rgba(230,57,70,0.15); color: var(--accent-red); border: 1px solid rgba(230,57,70,0.25); }
+
+        .badge-players {
+            font-size: 10px; color: var(--muted);
+            display: flex; align-items: center; gap: 4px;
+        }
+
+        .card-name {
+            font-family: 'Syne', sans-serif;
+            font-size: 22px; font-weight: 800;
+            margin-bottom: 8px; line-height: 1.1;
+        }
+        .card-desc { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 20px; }
+
+        .card-footer {
+            display: flex; align-items: center; justify-content: space-between;
+        }
+
+        .card-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+        .tag {
+            font-size: 10px; font-weight: 600; color: var(--muted);
+            background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+            padding: 3px 8px; border-radius: 6px;
+        }
+
+        .card-arrow {
+            width: 32px; height: 32px;
+            border-radius: 8px;
+            background: var(--card-accent, rgba(255,255,255,0.06));
+            display: flex; align-items: center; justify-content: center;
+            font-size: 14px;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+        .game-card:hover .card-arrow { transform: translateX(3px); }
+
+        .card-disabled .card-arrow { background: rgba(255,255,255,0.03); opacity: 0.4; }
+        .card-disabled:hover { transform: none; }
+
+        /* FEATURED CARD */
+        .game-card.featured {
+            grid-column: span 2;
+            background: linear-gradient(135deg, rgba(230,57,70,0.08), rgba(76,201,240,0.05));
+            border-color: rgba(230,57,70,0.2);
+        }
+        @media (max-width: 680px) { .game-card.featured { grid-column: span 1; } }
+
+        .featured-inner { display: flex; gap: 24px; align-items: flex-start; }
+        @media (max-width: 500px) { .featured-inner { flex-direction: column; } }
+
+        .featured-content { flex: 1; }
+        .featured-visual {
+            font-size: 80px; line-height: 1;
+            animation: float 4s ease-in-out infinite;
+        }
+        @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+        /* STATS BAR */
+        .stats-bar {
+            position: relative; z-index: 5;
+            max-width: 1100px; margin: 0 auto 40px;
+            padding: 0 20px;
+            display: flex; gap: 1px;
+            animation: fadeUp 0.5s 0.25s ease both;
+        }
+        .stat-item {
+            flex: 1;
+            background: var(--surface); border: 1px solid var(--border);
+            padding: 16px 20px;
+            text-align: center;
+        }
+        .stat-item:first-child { border-radius: 14px 0 0 14px; }
+        .stat-item:last-child { border-radius: 0 14px 14px 0; }
+        .stat-num {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 32px; letter-spacing: 1px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-red));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .stat-label { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+        footer {
+            position: relative; z-index: 5;
+            text-align: center; padding: 20px;
+            font-size: 12px; color: var(--muted);
+            border-top: 1px solid var(--border);
+        }
+    </style>
+</head>
+<body>
+
+<div class="bg-glow bg-glow-1"></div>
+<div class="bg-glow bg-glow-2"></div>
+<div class="bg-glow bg-glow-3"></div>
+
+<header>
+    <div class="logo-badge">
+        <span class="dot"></span>
+        Zona de Juegos
+    </div>
+    <h1 class="hero-title">
+        <span class="line1">TARTARIA</span>
+        <span class="line2">GAMES</span>
+    </h1>
+    <p class="hero-sub">Juegos asi nomás.</p>
+</header>
+
+
+<section class="games-section">
+    <div class="section-label">Juegos disponibles</div>
+
+    <div class="games-grid">
+
+        <!-- IMPOSTOR — FEATURED -->
+        <a class="game-card featured" href="juegos/impostor.html"
+           style="--card-accent: rgba(230,57,70,0.35); --card-glow: rgba(230,57,70,0.08); --card-icon-bg: rgba(230,57,70,0.1);">
+            <div class="featured-inner">
+                <div class="featured-content">
+                    <div class="card-header">
+                        <div class="card-icon">🕵️</div>
+                        <div class="card-badges">
+                            <span class="badge badge-available">Disponible</span>
+                            <span class="badge-players">👥 4 – 12 jugadores</span>
+                        </div>
+                    </div>
+                    <div class="card-name">Impostor</div>
+                    <div class="card-desc">Todos conocen la palabra secreta excepto el impostor. Sin revelarla, convencé a todos de que la sabés... o descubrí quién miente.</div>
+                </div>
+                <div class="featured-visual">🕵️</div>
+            </div>
+        </a>
+
+        <!-- WHO AM I -->
+        <a class="game-card" href="quienSoy.html"
+           style="--card-accent: rgba(76,201,240,0.3); --card-glow: rgba(76,201,240,0.06); --card-icon-bg: rgba(76,201,240,0.1);">
+            <div class="card-header">
+                <div class="card-icon">🏷️</div>
+                <div class="card-badges">
+                    <span class="badge badge-available">Disponible</span>
+                    <span class="badge-players">👥 3 – 10</span>
+                </div>
+            </div>
+            <div class="card-name">¿Quién Soy?</div>
+            <div class="card-desc">Cada uno tiene un personaje pegado en la frente. Hacé preguntas de sí o no para descubrir quién sos.</div>
+            <div class="card-footer">
+                <div class="card-tags">
+                    <span class="tag">Preguntas</span>
+                    <span class="tag">Creatividad</span>
+                </div>
+                <div class="card-arrow" style="background: rgba(76,201,240,0.15); color: #4cc9f0;">→</div>
+            </div>
+        </a>
+
+        
+
+    </div>
+</section>
+
+<footer>© Zona de Juegos — Hecho para jugar juntos</footer>
+
+<script>
+    // Mouse glow on cards
+    document.querySelectorAll('.game-card:not(.card-disabled)').forEach(card => {
+        card.addEventListener('mousemove', e => {
+            const rect = card.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width * 100).toFixed(1);
+            const y = ((e.clientY - rect.top) / rect.height * 100).toFixed(1);
+            card.style.setProperty('--mx', x + '%');
+            card.style.setProperty('--my', y + '%');
+        });
+    });
+</script>
+</body>
+</html>

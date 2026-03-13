@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impostor — Zona de Juegos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="estiloImpostor.css">
+</head>
+<body>
+
+<header class="site-header">
+    <a class="back-btn" href="index.html">← Juegos</a>
+    <div class="header-logo">
+        <div class="icon">🕵️</div>
+        <div class="title"><span>Impostor</span></div>
+    </div>
+</header>
+
+<main>
+
+    <!-- SCREEN 1: SETUP -->
+    <div class="screen active" id="screen-setup">
+        <div class="page-title">Configurar</div>
+        <p class="page-subtitle">Elegí la categoría, cuántos juegan y cuántos serán el impostor.</p>
+
+        <div class="info-box">
+            Todos ven la misma <strong>palabra secreta</strong> excepto los impostores,
+            que solo ven <strong>"IMPOSTOR"</strong>. Sin revelarla, cada uno tiene que
+            convencer al grupo de que la conoce. ¡Descubrí quién miente!
+        </div>
+
+        <span class="category-label">Categoría</span>
+        <div class="category-grid">
+            <button class="cat-btn" data-cat="series">
+                <span class="cat-icon">🎬</span>
+                <span class="cat-name">Series y Películas</span>
+            </button>
+            <button class="cat-btn selected" data-cat="futbol">
+                <span class="cat-icon">⚽</span>
+                <span class="cat-name">Fútbol</span>
+            </button>
+            <button class="cat-btn" data-cat="musica">
+                <span class="cat-icon">🎵</span>
+                <span class="cat-name">Música</span>
+            </button>
+            <button class="cat-btn" data-cat="escuela">
+                <span class="cat-icon">🏫</span>
+                <span class="cat-name">Escuela</span>
+            </button>
+            <button class="cat-btn" data-cat="paises">
+                <span class="cat-icon">🌍</span>
+                <span class="cat-name">Países</span>
+            </button>
+            <button class="cat-btn" data-cat="famosos">
+                <span class="cat-icon">⭐</span>
+                <span class="cat-name">Famosos</span>
+            </button>
+            <button class="cat-btn" data-cat="videojuegos">
+                <span class="cat-icon">🎮</span>
+                <span class="cat-name">Videojuegos</span>
+            </button>
+            <button class="cat-btn" data-cat="objetos">
+                <span class="cat-icon">🪄</span>
+                <span class="cat-name">Objetos</span>
+            </button>
+            <button class="cat-btn" data-cat="animales">
+                <span class="cat-icon">🐾</span>
+                <span class="cat-name">Animales</span>
+            </button>
+        </div>
+
+        <div class="input-row">
+            <div class="field">
+                <label>Participantes</label>
+                <input type="number" id="inputCantidad" min="3" max="20" value="5" placeholder="5">
+            </div>
+            <div class="field">
+                <label>Impostores</label>
+                <input type="number" id="inputImpostores" min="1" max="5" value="1" placeholder="1">
+            </div>
+        </div>
+
+        <button class="btn btn-primary" id="btnSetupNext">Ingresar nombres →</button>
+    </div>
+
+    <!-- SCREEN 2: NAMES -->
+    <div class="screen" id="screen-names">
+        <div class="page-title">Participantes</div>
+        <p class="page-subtitle">Escribí el nombre de cada jugador.</p>
+        <div class="names-grid" id="namesGrid"></div>
+        <button class="btn btn-primary" id="btnStartGame">Empezar →</button>
+        <button class="btn btn-ghost" id="btnBackSetup">← Volver</button>
+    </div>
+
+    <!-- SCREEN 3: REVEAL -->
+    <div class="screen" id="screen-reveal">
+        <div class="progress-wrap">
+            <div class="progress-track">
+                <div class="progress-fill" id="progressBar" style="width:0%"></div>
+            </div>
+            <span class="progress-label" id="progressLabel">1 / 5</span>
+        </div>
+
+        <div class="reveal-card">
+            <div class="reveal-avatar" id="revealAvatar">👤</div>
+            <div class="reveal-name" id="revealName">—</div>
+            <p class="reveal-prompt" id="revealPrompt">Mirá tu palabra cuando estés listo</p>
+            <div class="cat-badge" id="revealCatBadge">⚽ Fútbol</div>
+
+            <div class="word-reveal" id="wordReveal">
+                <div class="word-box" id="wordBox"></div>
+                <p class="word-hint" id="wordHint"></p>
+            </div>
+
+            <button class="btn btn-primary" id="btnShowWord" style="max-width:220px;">Ver mi palabra 👁</button>
+            <button class="btn btn-ghost" id="btnNext" style="display:none;max-width:220px;">Siguiente →</button>
+        </div>
+    </div>
+
+    <!-- SCREEN 4: DONE -->
+    <div class="screen" id="screen-done">
+        <div class="done-hero">
+            <span class="emoji">🎮</span>
+            <h2>¡A jugar!</h2>
+            <p>Todos ya vieron su palabra. Discutan, hagan preguntas y voten quién es el impostor.</p>
+        </div>
+
+        <div class="chips" id="gameChips"></div>
+
+        <div class="reveal-section">
+            <div class="final-word" id="finalWord">
+                <div class="final-word-label">Palabra secreta</div>
+                <div class="final-word-text" id="finalWordText"></div>
+            </div>
+            <div id="finalImpostors"></div>
+        </div>
+
+        <button class="btn btn-ghost" id="btnRevealWord">🔑 Revelar la palabra</button>
+        <button class="btn btn-ghost" id="btnRevealImpostors">🕵️ Revelar impostores</button>
+
+        <div class="play-again-section">
+            <div class="play-again-label">Jugar de nuevo</div>
+            <button class="btn btn-primary" id="btnPlayAgainSame">↺ Mismos jugadores</button>
+            <button class="btn btn-ghost" id="btnPlayAgainNew">+ Nueva partida</button>
+        </div>
+    </div>
+
+</main>
+
+<footer>Zona de Juegos</footer>
+
+<script src="impostor.js"></script>
+</body>
+</html>
