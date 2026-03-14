@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¿Quién Soy? — Zona de Juegos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="quienSoy.css">
+</head>
+<body>
+
+<header class="site-header">
+    <a class="back-btn" href="index.html">← Juegos</a>
+    <div class="header-title">🏷️ <span>¿Quién Soy?</span></div>
+</header>
+
+<main>
+
+    <!-- SETUP -->
+    <div class="screen active" id="screen-setup">
+        <div class="page-title">Configurar</div>
+        <p class="page-subtitle">¿Cuántos van a jugar?</p>
+        <div class="info-box">
+            Cada jugador recibe un <strong>personaje secreto</strong> que todos pueden ver menos ellos.
+            Haciendo preguntas de <strong>sí o no</strong>, tienen que adivinar quién son.
+        </div>
+        <label>Cantidad de jugadores</label>
+        <input type="number" id="inputPlayers" min="2" max="12" value="4" placeholder="4">
+        <button class="btn btn-primary" id="btnSetupNext">Ingresar nombres →</button>
+    </div>
+
+    <!-- NOMBRES -->
+    <div class="screen" id="screen-names">
+        <div class="page-title">Jugadores</div>
+        <p class="page-subtitle">Escribí el nombre de cada uno.</p>
+        <div class="names-grid" id="namesGrid"></div>
+        <button class="btn btn-primary" id="btnToAssign">Asignar personajes →</button>
+        <button class="btn btn-ghost"   id="btnBackSetup">← Volver</button>
+    </div>
+
+    <!-- ASIGNAR -->
+    <div class="screen" id="screen-assign">
+        <div class="progress-wrap">
+            <div class="progress-track">
+                <div class="progress-fill" id="progressBar" style="width:0%"></div>
+            </div>
+            <span class="progress-label" id="progressLabel">1 / 4</span>
+        </div>
+        <div class="turn-card">
+            <div class="turn-avatar" id="turnAvatar">👤</div>
+            <div class="turn-name"   id="turnName">—</div>
+            <p   class="turn-sub"   id="turnSub">La persona a tu izquierda debe escribir un personaje</p>
+
+            <div class="char-reveal" id="charReveal">
+                <div class="char-box" id="charBox"></div>
+                <p class="char-hint">¡Ya lo vieron todos! Pasá el teléfono al siguiente.</p>
+            </div>
+
+            <input type="text" id="charInput"
+                   placeholder="Ej: Messi, Batman, Homero Simpson…"
+                   maxlength="30" style="display:none; margin-bottom:12px;">
+
+            <button class="btn btn-primary"  id="btnEnterChar"   style="max-width:220px;">Ingresar personaje ✏️</button>
+            <button class="btn btn-ghost"    id="btnConfirmChar" style="display:none; max-width:220px;">Confirmar →</button>
+        </div>
+    </div>
+
+    <!-- A JUGAR -->
+    <div class="screen" id="screen-play">
+        <div class="page-title">¡A jugar!</div>
+        <p class="page-subtitle">Cada uno hace preguntas de <strong>sí o no</strong> al grupo. Revelá tu personaje cuando adivines.</p>
+        <div class="players-list" id="playersList"></div>
+        <button class="btn btn-primary" id="btnNewGame">↺ Nueva partida</button>
+        <button class="btn btn-ghost"   id="btnFromScratch">+ Desde cero</button>
+    </div>
+
+</main>
+
+<footer>Zona de Juegos</footer>
+
+<script src="quienSoy.js"></script>
+</body>
+</html>

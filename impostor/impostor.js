@@ -9,12 +9,12 @@ const CATEGORIES = {
             'Jurassic Park', 'El Señor de los Anillos', 'Harry Potter', 'Star Wars',
             'Jefe en Pañales', 'Peaky Blinders', 'Vikingos', 'Dark',
             'Los Soprano', 'Shrek', 'Dragon Ball Z', 'Better Call Saul', 'Seven', 'Scarface',
-            'The Last of Us', 'Oppenheimer', 'Barbie', 'Top Gun', 'Spider-Man',
+            'The Last of Us', 'Oppenheimer', 'El Secreto de sus Ojos', 'Top Gun', 'Spider-Man',
             'El Rey León', 'American Pie', 'Toy Story', 'Matrix', 'Forrest Gump',
-            'Succession', 'House of the Dragon', 'Wednesday', 'Euphoria', 'Chernobyl',
-            'Ozark', 'Narcos', 'The Bear', 'White Lotus', 'Severance',
-            'Fallout', 'Shogun', 'Dune', 'La Sustancia', 'Wicked',
-            'Conclave', 'Anora', 'Bitelchus Bitelchus', 'Alien: Romulus', 'Squid Game'
+            'Batman', 'Guasón', 'Avengers EndGame', 'Euphoria', 'The Walking Dead',
+            'Ozark', 'Narcos', 'The Bear', 'Volver al Futuro', 'La Lista de Schindler',
+            'La Purga', 'Los Juegos del Hambre', 'Dune', 'El Silencio de los Inocentes', 'Ciudad de Dios',
+            'Relatos Salvajes', 'Gladiador', 'Kill Bill', 'Alien', 'Bastardos sin gloria'
         ]
     },
     futbol: {
@@ -44,10 +44,10 @@ const CATEGORIES = {
             'Bizarrap', 'Peso Pluma', 'Karol G', 'Rauw Alejandro', 'J Balvin',
             'Gustavo Cerati', 'Charly García', 'Fito Páez', 'Los Redondos', 'Divididos',
             'Billie Eilish', 'Harry Styles', 'The Weeknd', 'Post Malone', 'Dua Lipa',
-            'Sabrina Carpenter', 'Olivia Rodrigo', 'SZA', 'Kendrick Lamar', 'Tyler The Creator',
-            'Frank Ocean', 'Arctic Monkeys', 'Tame Impala', 'The Strokes', 'Gorillaz',
-            'Rosalía', 'Anitta', 'Myke Towers', 'Feid', 'Nicki Nicole',
-            'Wos', 'Paulo Londra', 'Trueno', 'Ca7riel', 'Paco Amoroso'
+            'Sabrina Carpenter', 'Olivia Rodrigo', 'Bruno Mars', 'Kendrick Lamar', 'Lasy Gaga',
+            'George Michael', 'Arctic Monkeys', 'Tame Impala', 'The Smiths', 'Gorillaz',
+            'Pitbull', 'Anitta', 'Myke Towers', 'Feid', 'Nicki Nicole',
+            'Elvis', 'Imagine Dragons', 'Diego Torres', 'Bee Gees', 'Avicii'
         ]
     },
     escuela: {
@@ -159,7 +159,7 @@ const CATEGORIES = {
             'Águila', 'Búho', 'Pingüino', 'Flamenco', 'Tucán',
             'Colibrí', 'Pelícano', 'Cóndor', 'Avestruz', 'Pavo real',
             'Ornitorrinco', 'Koala', 'Canguro', 'Wombat', 'Tapir',
-            'Capibara', 'Armadillo', 'Oso hormiguero', 'Pangolín', 'Mantis religiosa'
+            'Capibara', 'Armadillo', 'Oso hormiguero', 'Pangolín', 'Dragon Comodoro'
         ]
     }
 };
